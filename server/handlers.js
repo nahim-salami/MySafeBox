@@ -1,6 +1,6 @@
 const {ReactSession} = require("react-client-session")
-const { MySafeAccount } = require("./MySafeAccount.js");
-const { MySafeComponents } = require("./MysafeComponent.js");
+const { MySafeAccount } = require("./MySafeAccount");
+const { MySafeComponents } = require("./MysafeComponent");
 const {v4 : uuidv4} = require('uuid');
 //ReactSession.setStoreType("cookie");
 const signinHandler = (req, res) => {

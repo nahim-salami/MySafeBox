@@ -1,4 +1,4 @@
-const db = require("./MysafeDatabase.js");
+const db = require("./MysafeDatabase");
 var MySafeDatabase = db.MySafeDatabase;
 /**
  * The user class allows to manage everything concerning the user's data.
