@@ -1,0 +1,6 @@
+.second-part {
+    display: flex;
+    width: 100vw;
+    overflow-x: hidden;
+    height: 100%;
+}

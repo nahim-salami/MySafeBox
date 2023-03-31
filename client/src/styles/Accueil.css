@@ -1,0 +1,13 @@
+.Accueil {
+    width: 100%;
+}
+
+.box-container {
+    display: flex;
+}
+
+.tab-description {
+    text-align: left;
+    font-size: 23px;
+    margin: 30px auto;
+}

@@ -9,6 +9,7 @@ class MySafeAccount extends MySafeUsers {
     #password;
     #username;
     #log;
+    allData;
     #beginDay;
     #endDay;
     /**
@@ -58,7 +59,7 @@ class MySafeAccount extends MySafeUsers {
      * @param {*string} password 
      */
     #setPassWord(password) {
-        if(typeof password === "string" && password.length > 5) {
+        if(typeof password === "string" && password.length > 0) {
             this.#password = md5(password);
         }
     }
@@ -123,45 +124,60 @@ class MySafeAccount extends MySafeUsers {
      * Open user account
      */
     open() {
-        var query = "SELECT * FROM Account WHERE username='"+ this.#username + "'";
+        var joinQuery = "SELECT DISTINCT * FROM Account JOIN users ON users.userID = account.userID WHERE username='"+ this.#username + "' OR email='" + this.#username + "' AND password='" + this.#password + "'";
         var result  =  false, that = this;
-        this.parent.query(query, function(err, response){
+        this.parent.query(joinQuery, function(err, response){
             result = response;
         });
 
         var compt = 0, add = false;
         var timer = setInterval(()=>{
             if(result && result.length > 0 && that.operation == "login") {
-                that.#userId = result[0].userID
+                that.allData = result[0];
+                that.#userId = result[0].userID;
+                that.#username = result[0].username;
                 if(that.#password == result[0].password) {
-                    console.log("valid");
                     that.connect = true;
-                    that.request.send(`identifiant valid`).end();
+                    that.request.send({
+                        message: `valid`,
+                        data: {
+                            id: that.#userId,
+                            username: that.#username,
+                            mail: result[0].email,
+                            birthday: result[0].birthday
+                        },
+                    }).end();
                 }
                 else{
-                    console.log("Identifiant invalid");
                     that.connect = false;
-                    that.request.send(`Identifiant invalid`).end();
+                    that.request.send({
+                        message: `Identifiant invalid`
+                    }).end();
                 }
                 clearInterval(timer);
             }
-            else if(that.operation == "signup" && compt > 40 && !add) {
+            else if(that.operation == "signup" && compt > 40 && !add && result.length <= 0) {
                 that.add();
                 add = true;
                 var innerTimer = setInterval(()=>{
                     that.#userId = that.getID();
                     if(typeof that.getID() !== "undefined" && that.getID() != null) {
                         that.#create(that.getID());
-                        console.log("User create");
-                        that.request.send(`Utilisateur créer avec succes`).end();
+                        that.request.send({
+                            message: `create`,
+                            data: {
+                                id: that.#userId
+                            }
+                        }).end();
                         clearInterval(innerTimer);
                     }
                 }, 50);
                 clearInterval(timer);
             }
             else if(compt > 40 && !add) {
-                console.log("Identifiant invalid");
-                that.request.send(`Identifiant invalid`).end();
+                that.request.send({
+                    message: `Identifiant invalid`
+                }).end();
                 clearInterval(timer);
             }
             ++compt;
@@ -204,6 +220,10 @@ class MySafeAccount extends MySafeUsers {
         this.parent.query(query, function (err, result) {
             if (err) throw err;
         });
+    }
+
+    getAllData() {
+        return this.allData;
     }
 }
 

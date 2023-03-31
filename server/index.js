@@ -1,11 +1,22 @@
-const { MySafeComponents } = require("./MySafeComponent.js");
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const fileUpload = require("express-fileupload");
-const { signinHandler, signupHandler, createComponent, createFolder } = require('./handlers');
+const {
+    signinHandler,
+    signupHandler,
+    createComponent,
+    createFolder,
+    isLogin,
+    getComponentList,
+    removeComponent,
+    removeFolder,
+    getFolderList,
+    getUserData
+} = require('./handlers');
+
 const cors = require("cors");
+const port = process.env.PORT || 3001;
 const app = express();
 app.use(bodyParser.json({limit: '250mb'}));
 app.use(cookieParser());
@@ -15,8 +26,11 @@ app.post('/signin', signinHandler);
 app.post('/signup', signupHandler);
 app.post('/component', createComponent);
 app.post('/createFolder', createFolder);
+app.get('/checklogin', isLogin);
+app.post('/componentlist', getComponentList);
+app.post('/folderList', getFolderList);
+app.post('/removeComponent', removeComponent);
+app.post('/removeFolder', removeFolder);
+app.post('/userData', getUserData);
 
-app.listen(3001);
-
-// var comp = new MySafeComponents();
-// comp.create();
+app.listen(port, () => console.log(`Listening on port ${port}`));

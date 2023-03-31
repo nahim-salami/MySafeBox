@@ -1,0 +1,81 @@
+.Connexion {
+  width: 100vw;
+  height: 100vh;
+  background-color: #c6bfbfb2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Connexion .wrapper {
+  display: flex;
+  height: 60%;
+  width: 70%;
+}
+
+.signin-logo {
+  height: 85%;
+  width: auto;
+}
+
+.Connexion .logo-part {
+  background-color: #3399e4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-basis: 50%;
+}
+
+.Connexion .form-wrapper {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  flex-basis: 50%;
+}
+
+.Connexion form p {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 29px;
+  margin-top: 50px;
+  margin-bottom: 5vh;
+}
+.Connexion form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  gap: 4vh;
+}
+
+.Connexion span {
+  width: calc(60% + 22px);
+  text-align: right;
+  margin: -20px auto;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.47);
+  text-decoration: underline;
+}
+
+.Connexion input {
+  width: 60%;
+  padding: 0 10px;
+  height: 43px;
+  font-weight: 400;
+  font-size: 18px;
+  font-family: "Inter", sans-serif;
+  outline: none;
+}
+
+.Connexion button {
+  font-family: "Inter", sans-serif;
+  width: 62%;
+  height: 57px;
+  background: #2d315d;
+  font-weight: 400;
+  font-size: 24px;
+  color: white;
+  margin: auto;
+  border: 0;
+}

@@ -1,0 +1,103 @@
+.second-banner {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -8px;
+  font-weight: 400;
+  padding-bottom: 35px;
+  border-bottom: 1px solid #9f9f9f;
+  margin-bottom: 50px;
+}
+
+.profile-picture {
+  border-radius: 50%;
+  background-color: blue;
+  width: 40px;
+  height: 40px;
+}
+
+.profile-picture,
+.general-btn,
+.junk {
+  cursor: pointer;
+}
+
+.profile {
+  padding: 40px;
+  width: 16%;
+  overflow: hidden;
+  position: fixed;
+  z-index: 9999;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  background: #ece3e3;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: flex-start;
+  font-size: 16px;
+}
+
+.p-title {
+  font-weight: 700;
+  font-size: 19px;
+  text-decoration: underline;
+}
+
+.no-profile {
+  display: none;
+}
+.search-bar {
+  width: 50%;
+  position: relative;
+}
+
+#searchbar {
+  width: 100%;
+  border: 1px solid black;
+  height: 46px;
+  border-radius: 30px;
+  font-size: 22px;
+  outline: none;
+  padding-left: 25px;
+}
+
+.advanced-search {
+  font-size: 22px;
+}
+
+.add-btn {
+  background-color: #2d315d;
+  padding: 5px;
+  color: white;
+  border-radius: 15px;
+}
+
+.lg-pp.profile-picture {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+}
+
+.logout-btn {
+  width: 50%;
+  padding: 10px 0;
+}
+
+.logout-btn.general-btn {
+  margin-left: 0;
+}
+
+.pp-wrapper {
+  display: grid;
+  width: 100%;
+  justify-items: center;
+  gap: 10px;
+}
+
+.p-close-btn {
+  background: transparent;
+  border: 0;
+}

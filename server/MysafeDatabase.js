@@ -10,6 +10,7 @@ class MySafeDatabase {
             database: name,
             multipleStatements: true
         });
+        
         var that = this;
         this.#db.connect(function(err) {
             if (err) {
@@ -29,6 +30,7 @@ class MySafeDatabase {
         query += "lastname VARCHAR(50), ";
         query += "adress VARCHAR(255), ";
         query += "email VARCHAR(50), ";
+        query += "role VARCHAR(15), ";
         query += "birthday VARCHAR(50) ";
         query += ")";
         

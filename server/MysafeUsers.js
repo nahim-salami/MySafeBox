@@ -146,7 +146,7 @@ class MySafeUsers extends MySafeDatabase{
     add() {
         var that = this;
         var query = "INSERT INTO Users (lastname, firstname, email, birthday) VALUES (?, ?, ?, ?)";
-        var data = [this.getLastName(), this.getFirstName(), this.getBirthDay(), this.getMail()]
+        var data = [this.getLastName(), this.getFirstName(), this.getMail(), this.getBirthDay()]
         this.parent.query(query, data, function (err, result) {
             if (err) console.log("Une ereur s'est produite")
             else that.#userId = result.insertId;

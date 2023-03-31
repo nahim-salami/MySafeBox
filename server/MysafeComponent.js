@@ -109,7 +109,9 @@ class MySafeComponents extends MySafeDatabase{
         var session_key  = ReactSession.get("session_token"), that = this;
         var session  = ReactSession.get(session_key);
         if(!session || typeof session === "undefined") return false;
-        if(session.isConnect()) {
+        var data = session.getAllData();
+        var role = data.role;
+        if(session.isConnect() && role != null && role.indexOf('w') != '-1') {
             var userSpace = "./userSpace/" + session.getUserName() + "#" + session.getTheID();
             var folderPath = userSpace + '/' + path + '/' + name;
             fs.access(folderPath, (error) => {
@@ -150,7 +152,9 @@ class MySafeComponents extends MySafeDatabase{
         var session_key  = ReactSession.get("session_token"), that = this;
         var session  = ReactSession.get(session_key);
         if(!session || typeof session === "undefined") return false;
-        if(session.isConnect()) {
+        var data = session.getAllData();
+        var role = data.role;
+        if(session.isConnect() && role != null && role.indexOf('w') != '-1') {
             var userSpace = "./userSpace/" + session.getUserName() + "#" + session.getTheID();
             var query = "INSERT INTO Component (userID, nom, type, categorie, status, path, folder, folder_path, createDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
@@ -163,6 +167,7 @@ class MySafeComponents extends MySafeDatabase{
                     that.response.send("An error occured").end();
                 }
                 else {
+                    console.log(file)
                     if(!fs.existsSync(file)) {
                         // append data to a file
                         fs.appendFile(file, filedata, err => {
@@ -190,24 +195,48 @@ class MySafeComponents extends MySafeDatabase{
      * Remove folder.
      * @param {*} path  Folder path.
      */
-    removeFolder(path) {
+    removeFolder(folder_id, path) {
         var that = this;
         var session_key  = ReactSession.get("session_token"), that = this;
         var session  = ReactSession.get(session_key);
         if(!session || typeof session === "undefined") return false;
-
-        if(session.isConnect()) {
+        var data = session.getAllData();
+        var role = data.role;
+        if(session.isConnect() && role != null && role.indexOf('x') != '-1') {
             fs.access(path, (error) => {
                 if(!error) {
-                    var query = "DELETE FROM Folder WHERE path = '" + path + "' AND userID =" + session.getTheID();
+                    var query = "DELETE FROM Folder WHERE folder_id=" + folder_id + " AND userID =" + session.getTheID();
                     that.getDb().query(query, function(err, res){
                         if(!err) {
-                            that.response.send("Folder remove").end();
+                            fs.rmdir(path, { recursive: true, force: true })
+                            that.response.send(
+                                {
+                                    message:"Folder remove",
+                                    succes: true
+                                }
+                            ).end();
+                        }
+                        else {
+                            that.response.send({
+                                message:"Your are not allowed to remove",
+                                succes: false
+                            }).end();
                         }
                     })
-                    fs.rmdir(path, { recursive: true, force: true })
+                }
+                else {
+                    that.response.send({
+                        message:"Your are not allowed to remove",
+                        succes: false
+                    }).end();
                 }
             })
+        }
+        else {
+            that.response.send({
+                message:"Your are not allowed to remove",
+                succes: false
+            }).end();
         }
     }
 
@@ -215,23 +244,40 @@ class MySafeComponents extends MySafeDatabase{
      * Remove file
      * @param {*} path  File path
      */
-    remove(path) {
+    remove(component_id, path) {
         var that = this;
         var session_key  = ReactSession.get("session_token"), that = this;
         var session  = ReactSession.get(session_key);
         if(!session || typeof session === "undefined") return false;
-        if(session.isConnect()) {
+        var data = session.getAllData();
+        var role = data.role;
+        if(session.isConnect() && role != null && role.indexOf('x') != '-1') {
             fs.access(path, (error) => {
                 if(!error) {
-                    var query = "DELETE FROM Component WHERE path = '" + path + "' AND userID =" + session.getTheID();
+                    var query = "DELETE FROM Component WHERE component_id=" + component_id + " AND userID =" + session.getTheID();
                     that.getDb().query(query, function(err, res){
                         if(!err) {
-                            that.response.send("Folder remove").end();
+                            fs.rmSync(path, { recursive: true, force: true });
+                            that.response.send({
+                                message:"File remove",
+                                succes: true
+                            }).end();
                         }
                     })
-                    fs.rmdir(path, { recursive: true, force: true })
+                }
+                else {
+                    that.response.send({
+                        message:"Your are not allowed to remove",
+                        succes: false
+                    }).end();
                 }
             })
+        }
+        else {
+            that.response.send({
+                message:"Your are not allowed to remove",
+                succes: false
+            }).end();
         }
         
     }
@@ -249,7 +295,15 @@ class MySafeComponents extends MySafeDatabase{
         if(!session || typeof session === "undefined") return false;
         if(session.isConnect()) {
             if(path == 'all') {
-                var query = "SELECT * FROM Component WHERE userID =" + session.getTheID();
+                var query = "SELECT * FROM Component WHERE userID=" + session.getTheID();
+                that.getDb().query(query, function(err, res){
+                    if(!err) {
+                        that.response.send(res).end();
+                    }
+                })
+            }
+            else if(path == 'folder') {
+                var query = "SELECT * FROM Folder WHERE userID=" + session.getTheID();
                 that.getDb().query(query, function(err, res){
                     if(!err) {
                         that.response.send(res).end();

@@ -1,0 +1,38 @@
+.Banner {
+  width: 21vw;
+  height: 100vh;
+  background-color: white;
+  overflow-x: hidden;
+}
+
+.Banner img {
+  width: 100%;
+}
+
+.Banner-fixed {
+  width: 18vw;
+  height: 100vh;
+  background-color: #3399e4;
+  overflow-x: hidden;
+  position: fixed;
+  z-index: 500;
+}
+.menu {
+  display: grid;
+  text-align: left;
+  gap: 0.77vh;
+  color: black;
+  font-size: 1.1em;
+}
+
+.menu-wrapper {
+  border: 5px solid;
+}
+
+.section {
+  width: calc(100% - 3vw);
+  padding-left: 3vw;
+  line-height: 38px;
+  text-decoration: none;
+  color: black;
+}
