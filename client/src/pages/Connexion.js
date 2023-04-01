@@ -10,8 +10,7 @@ function Connexion() {
   const [password, setPassword] = useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    var url = document.location.origin;
-    Axios.post(url + ":3001/signin", {
+    Axios.post("http://3.14.129.203/signin", {
       username: username,
       password: password,
     }).then((response) => {

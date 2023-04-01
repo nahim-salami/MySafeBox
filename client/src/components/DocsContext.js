@@ -6,7 +6,7 @@ export const DocsContext = createContext({})
 var url = document.location.origin;
 const getLogStatus = async function () {
   var result = false;
-  await Axios.get(url + ':3001/checklogin').then((res)=>{result = res.data});
+  await Axios.get('http://3.14.129.203/checklogin').then((res)=>{result = res.data});
   return result;
 }
 

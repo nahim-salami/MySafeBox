@@ -34,8 +34,8 @@ function TabLine({
   const handleDelete = (e) => {
     var _id = e.target.getAttribute("data-id");
     var cpath = e.target.getAttribute("data-path");
-    var queryUrl = url + ":3001/removeComponent";
-    if(type == 'folder') queryUrl = url + ":3001/removeFolder";
+    var queryUrl = "http://3.14.129.203/removeComponent";
+    if(type == 'folder') queryUrl = "http://3.14.129.203/removeFolder";
     Axios.post(queryUrl, {
       component_id: _id,
       path: cpath,

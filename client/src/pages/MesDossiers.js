@@ -12,7 +12,7 @@ function MesDossiers() {
   const { activeDocs, search, foldersInfos } = useContext(DocsContext);
   const createFolder = function (e) {
     var folderName = prompt("Nom du dossier");
-    Axios.post(url + ":3001/createFolder", {
+    Axios.post("http://3.14.129.203/createFolder", {
       folderName: folderName,
       path: '/',
       status: 'draft'
