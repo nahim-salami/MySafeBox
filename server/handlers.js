@@ -1,7 +1,9 @@
 const {ReactSession} = require("react-client-session")
-const { MySafeAccount } = require("./MySafeAccount");
+import * as msfb from './MysafeAccount';
 const { MySafeComponents } = require("./MysafeComponent");
 const {v4 : uuidv4} = require('uuid');
+const MySafeAccount = msfb.MySafeAccount;
+
 //ReactSession.setStoreType("cookie");
 const signinHandler = (req, res) => {
     // get users credentials from the JSON body
