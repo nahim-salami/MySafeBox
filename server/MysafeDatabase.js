@@ -2,7 +2,7 @@ const mysql = require("mysql")
 
 class MySafeDatabase {
     #db;
-    constructor(username = "root", password = "", host = "localhost", name = "MYSAFEBOX") {
+    constructor(username = "msfb", password = "mysafebox", host = "database-1.chy0hem4utjk.us-east-2.rds.amazonaws.com", name = "database-1") {
         this.#db = mysql.createConnection({
             user: username,
             host: host,
