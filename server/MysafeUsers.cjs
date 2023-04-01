@@ -1,4 +1,4 @@
-const db = require("./MysafeDatabase");
+const db = require("./MysafeDatabase.cjs");
 var MySafeDatabase = db.MySafeDatabase;
 /**
  * The user class allows to manage everything concerning the user's data.

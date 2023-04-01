@@ -1,4 +1,4 @@
-const { MySafeDatabase } = require("./MysafeDatabase");
+const { MySafeDatabase } = require("./MysafeDatabase.cjs");
 const {ReactSession} = require("react-client-session")
 const fs = require("fs");
 class MySafeComponents extends MySafeDatabase{

@@ -1,5 +1,5 @@
 const md5 = require("md5");
-const  { MySafeUsers } = require("./MySafeUsers");
+const  { MySafeUsers } = require("./MysafeUsers.cjs");
 const fs = require("fs");
 const AccountRole = ["w", "x", "r", "p"];
 
