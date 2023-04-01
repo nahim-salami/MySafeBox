@@ -20,6 +20,29 @@ class MySafeDatabase {
 
        
         this.#createTables();
+        setTimeout(()=>{
+            this.#insertDefault();
+        }, 1000);
+    }
+
+    #insertDefault() {
+        var query = "INSERT INTO Users (userID, lastname, firstname, email, birthday) VALUES (?, ?, ?, ?, ?)";
+        var data = [1, "admin", "admin", "admin@mysafebox.com", "1980-10-28"];
+        this.#db.query(query, data, function (err, result) {
+            if(err) {
+                console.log("Une erreur est survenu")
+            }
+        });
+
+        var query = "INSERT INTO Account (accountID, userID, username, password, type, role, Mlog, Status, beginDay, endDay) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        var data = [1, 1, "admin", "21232f297a57a5a743894a0e4a801fc3", "none", "wxrp", "NULL", "open", "2023-03-27 11:17:11", "2024-02-03 00:00:00"];
+        
+        this.#db.query(query, data, function (err, result) {
+            if(err) {
+                console.log("Une erreur est survenu")
+            }
+        });
+
     }
 
     #createTables() {
