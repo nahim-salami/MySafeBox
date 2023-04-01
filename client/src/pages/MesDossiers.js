@@ -8,10 +8,11 @@ import { DocsContext } from "../components/DocsContext"
 import Axios from "axios";
 
 function MesDossiers() {
+  var url = document.location.origin;
   const { activeDocs, search, foldersInfos } = useContext(DocsContext);
   const createFolder = function (e) {
     var folderName = prompt("Nom du dossier");
-    Axios.post("http://localhost:3001/createFolder", {
+    Axios.post(url + ":3001/createFolder", {
       folderName: folderName,
       path: '/',
       status: 'draft'

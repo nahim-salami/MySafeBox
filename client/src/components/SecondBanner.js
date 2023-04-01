@@ -7,10 +7,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faX } from "@fortawesome/free-solid-svg-icons"
 import { DocsContext } from "./DocsContext"
 import Axios from "axios";
-
+var url = document.location.origin;
 const getUserData = async function () {
   var result = false;
-  await Axios.post('http://localhost:3001/userData').then((res)=>{result = res.data});
+  await Axios.post(url + ':3001/userData').then((res)=>{result = res.data});
   return result;
 }
 function SecondBanner() {

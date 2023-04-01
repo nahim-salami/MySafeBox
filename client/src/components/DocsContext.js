@@ -3,9 +3,10 @@ import { useState, useEffect } from "react";
 import Axios from "axios";
 
 export const DocsContext = createContext({})
+var url = document.location.origin;
 const getLogStatus = async function () {
   var result = false;
-  await Axios.get('http://localhost:3001/checklogin').then((res)=>{result = res.data});
+  await Axios.get(url + ':3001/checklogin').then((res)=>{result = res.data});
   return result;
 }
 

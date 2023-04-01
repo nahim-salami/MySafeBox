@@ -3,13 +3,13 @@ import SecondBanner from "./SecondBanner"
 import "../styles/Layout.css"
 import { DocsContext } from "./DocsContext"
 import Axios from "axios";
-
+var url = document.location.origin;
 const getDocData = async function () {
-  return await Axios.post("http://localhost:3001/componentlist")
+  return await Axios.post(url + ":3001/componentlist")
 }
 
 const getFolderData = async function () {
-  return await Axios.post("http://localhost:3001/folderList")
+  return await Axios.post(url + ":3001/folderList")
 }
 
 function Layout({ children, docs, type }) {

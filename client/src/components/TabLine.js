@@ -8,7 +8,7 @@ import shared from "../assets/VectorShare.png"
 import { IoPricetagOutline } from "react-icons/io5"
 import { DocsContext } from "./DocsContext"
 import Axios from "axios";
-
+var url = document.location.origin;
 function TabLine({
   type,
   nom,
@@ -34,8 +34,8 @@ function TabLine({
   const handleDelete = (e) => {
     var _id = e.target.getAttribute("data-id");
     var cpath = e.target.getAttribute("data-path");
-    var queryUrl = "http://localhost:3001/removeComponent";
-    if(type == 'folder') queryUrl = "http://localhost:3001/removeFolder";
+    var queryUrl = url + ":3001/removeComponent";
+    if(type == 'folder') queryUrl = url + ":3001/removeFolder";
     Axios.post(queryUrl, {
       component_id: _id,
       path: cpath,

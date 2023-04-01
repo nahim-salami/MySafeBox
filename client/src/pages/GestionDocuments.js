@@ -8,14 +8,14 @@ import Axios from "axios";
 
 function GestionDocuments() {
   const { activeDocs, search } = useContext(DocsContext)
-
+  var url = document.location.origin;
   const setComponentData = (e) => {
     let reader = new FileReader();
     var files = e.target.files[0];
     if(typeof files === "undefined") return;
     reader.readAsDataURL(files);
     reader.onload = function() {
-        Axios.post("http://localhost:3001/component", {
+        Axios.post(url + ":3001/component", {
             name: files.name,
             type: files.type,
             path: reader.result,
