@@ -20,7 +20,8 @@ const signinHandler = (req, res) => {
         username: username,
         password: password,
         operation: "login",
-        request: res
+        request: res,
+        token: sessionToken
     });
     
     ReactSession.set("session_token", sessionToken);
@@ -56,12 +57,12 @@ const signupHandler = (req, res) => {
         dateNow: new Date(),
         expire: 12,
         operation: "signup",
-        request: res
+        request: res,
+        token: sessionToken
     });
 
-    // and the value as the UUID we generated. We also set the expiry time
-    ReactSession.set("kkk", sessionToken);
-   // ReactSession.set(sessionToken, JSON.stringify(session));
+    ReactSession.set("session_token", sessionToken);
+    ReactSession.set(sessionToken, session);
 
     session.open();
 }
@@ -105,10 +106,12 @@ const isLogin = (req, res) => {
 }
 
 const getComponentList = (req, res) => {
+  const { username, token } = req.body;
+
     var session_tokens = ReactSession.get("session_token");
     var log = false;
     
-    if(typeof session_tokens !== "undefined")
+    if(session_tokens == token)
     {
       var userAccount = ReactSession.get(session_tokens);
       if(userAccount.isConnect()) {
@@ -119,14 +122,18 @@ const getComponentList = (req, res) => {
       }
     }
     else {
-        res.send(log).end();
+        res.send({
+          t: session_tokens,
+          b: token
+        }).end();
     }
 }
 
 const getFolderList = (req, res) => {
     var session_tokens = ReactSession.get("session_token");
     var log = false;
-    
+    const { username, key } = req.body;
+
     if(typeof session_tokens !== "undefined")
     {
       var userAccount = ReactSession.get(session_tokens);
@@ -143,6 +150,9 @@ const getFolderList = (req, res) => {
 }
 
 const removeComponent = (req, res) => {
+
+  const { username, key } = req.body;
+
     var session_tokens = ReactSession.get("session_token");
     var log = false;
     

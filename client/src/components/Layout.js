@@ -1,32 +1,35 @@
+import Axios from "axios";
 import React, { useContext, useEffect, useLayoutEffect } from "react"
 import SecondBanner from "./SecondBanner"
 import "../styles/Layout.css"
 import { DocsContext } from "./DocsContext"
-import Axios from "axios";
+import { getCookie, setCookie, apiUrl, apiBaseUrl } from "../components/utils";
+
 var url = document.location.origin;
-const getDocData = async function () {
-  return await Axios.post("http://3.14.129.203/componentlist")
+const msfbUserData = JSON.parse(getCookie("msfb-user-data"));
+
+const getDocData = async function (data) {
+  return await Axios.post(apiUrl.componentlist, data)
 }
 
-const getFolderData = async function () {
-  return await Axios.post("http://3.14.129.203/folderList")
+const getFolderData = async function (data) {
+  return await Axios.post(apiUrl.folderList, data)
 }
-
 function Layout({ children, docs, type }) {
-  const { setActiveDocs, setSearch, setCheckeds } = useContext(DocsContext);
+  const { setActiveDocs, setSearch, setCheckeds } = useContext(DocsContext)
+  const msfbUserData = JSON.parse(getCookie("msfb-user-data"));
 
   useLayoutEffect(() => {
     if(type != "folder") {
-      getDocData().then((res)=>{
-        setActiveDocs(res.data);
+      getDocData({token:msfbUserData.data.token}).then((res)=>{
+        setActiveDocs((res.data) ? res.data : []);
       })
     }
     else {
-      getFolderData().then((res)=>{
-        setActiveDocs(res.data);
+      getFolderData({token:msfbUserData.data.token}).then((res)=>{
+        setActiveDocs((res.data) ? res.data : []);
       })
     }
-    
     setSearch("")
     // eslint-disable-next-line
   }, [])

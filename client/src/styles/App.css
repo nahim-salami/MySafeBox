@@ -8,6 +8,26 @@
   width: 100%;
 }
 
+.msfb-modal-file-type{
+  position: absolute;
+  top: 1em;
+  left: 45%;
+  width: 12em;
+  padding: 1em;
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #e5e2e2;
+}
+
+.display-file-modal{
+  display: flex !important;
+}
+
+.hide-file-modal{
+  display: none !important;
+}
+
 
 html, body {
   width: 100vw;
@@ -49,9 +69,4 @@ html, body {
   to {
     transform: rotate(360deg);
   }
-}
-
-
-.userfile{
-  display: none !important;
 }

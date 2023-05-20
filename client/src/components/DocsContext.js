@@ -1,28 +1,27 @@
-import { createContext } from "react";
-import { useState, useEffect } from "react";
-import Axios from "axios";
+import { createContext } from "react"
+import { useState, useEffect } from "react"
+const {getCookie, setCookie} = require("./utils")
 
-export const DocsContext = createContext({})
-var url = document.location.origin;
-const getLogStatus = async function () {
-  var result = false;
-  await Axios.get('http://3.14.129.203/checklogin').then((res)=>{result = res.data});
-  return result;
-}
+export const DocsContext = createContext({});
 
 const DocsContextProvider = ({ children }) => {
-  const [checkeds, setCheckeds] = useState([]);
-  const [search, setSearch] = useState("");
+  const [checkeds, setCheckeds] = useState([])
+  const [search, setSearch] = useState("")
 
-  const [activeDocs, setActiveDocs] = useState([]);
-  const [docsInfo, setDocsInfo] = useState('');
-  const [foldersInfos, setFolderInfo] = useState('');
-  var savedLog = false;
+  const [activeDocs, setActiveDocs] = useState([])
+
+  // useEffect(() => {
+  //   console.log(activeDocs)
+  // }, [activeDocs])
+
+  const savedLog = getCookie("msfb-logged");
+  
   const [logged, setLogged] = useState(savedLog ? JSON.parse(savedLog) : false);
-  getLogStatus().then(function(res){
-    savedLog = res;
-    setLogged(savedLog)
-  });
+
+  useEffect(() => {
+    setCookie("msfb-logged", JSON.stringify(logged));
+  }, [logged])
+
   // const [docs, setDocs] = useState([]);
 
   return (
@@ -36,10 +35,6 @@ const DocsContextProvider = ({ children }) => {
         setLogged,
         search,
         setSearch,
-        docsInfo,
-        setDocsInfo,
-        foldersInfos,
-        setFolderInfo
       }}
     >
       {children}

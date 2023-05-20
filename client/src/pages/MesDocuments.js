@@ -1,32 +1,36 @@
 import React, { useContext } from "react"
+import Axios from "axios";
 import "../styles/MesDocuments.css"
 import Layout from "../components/Layout"
-//import { docsInfo } from "../datas/docInfo"
+import { docsInfo } from "../datas/docInfo"
 import TabHead from "../components/TabHead"
 import TabLine from "../components/TabLine"
 import { DocsContext } from "../components/DocsContext"
+import { getCookie, setCookie, apiUrl, apiBaseUrl } from "../components/utils";
 
 function MesDocuments() {
-  const { activeDocs, search, docsInfo } = useContext(DocsContext);
-
+  const { activeDocs, search } = useContext(DocsContext);
+  const isLog = getCookie("msfb-logged");
+  console.log(isLog)
+  
   return (
     <Layout docs={docsInfo}>
-      <div className="Mes-documents" >
+      <div className="Mes-documents">
         <div className="custom-bar">
           <button className="junk">Voir corbeille</button>
         </div>
-        
+
         {activeDocs.length ? (
           <>
             <TabHead
               col1={"Documents"}
               col2="Dernière date de changement"
-              lines={(typeof docsInfo.map === "function") ? docsInfo.map(({ id }) => id) : {}}
+              lines={docsInfo.map(({ id }) => id)}
             />
             {activeDocs.map(
               (doc, idx) =>
                 (!search ||
-                  doc.nom.toLowerCase().includes(search.toLowerCase())) && (
+                  doc.name.toLowerCase().includes(search.toLowerCase())) && (
                   <TabLine {...doc} key={idx} />
                 )
             )}

@@ -12,7 +12,7 @@ function Accueil() {
   const docs = docsInfo.slice(0, 3)
 
   const { activeDocs, search, logged } = useContext(DocsContext)
-
+  console.log(activeDocs)
   return (
     <>
       {!logged ? (
@@ -30,13 +30,13 @@ function Accueil() {
               <Box
                 color={"rgba(99, 42, 192, 0.44)"}
                 type={"folder"}
-                value={50}
+                value={activeDocs.length}
                 description="Documents"
               />
               <Box
                 color="rgba(19, 100, 42, 0.44)"
                 type="calendar"
-                value="01/05/22"
+                value={activeDocs.length == 0 ? 'Auccun' : new Date(activeDocs[activeDocs.length-1].createDate).toLocaleDateString() }
                 description="Derniers partages"
               />
             </div>
@@ -48,7 +48,7 @@ function Accueil() {
               lines={docs.map((doc) => doc.component_id)}
               background
             />
-            {activeDocs.map(
+             {activeDocs.map(
               (doc, idx) =>
                 (!search ||
                   doc.nom.toLowerCase().includes(search.toLowerCase())) && (

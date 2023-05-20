@@ -1,8 +1,10 @@
 .general-btn {
     background: #2D315D;
     color: white;
+    font-family: 'Inter', sans-serif;
     font-size: 17px;
+    border-radius: 10px;
     border: 0;
-    padding: auto 5px;
+    padding: 5px 10px;
     margin-left: 25px;
 }

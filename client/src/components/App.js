@@ -10,33 +10,44 @@ import GestionDocuments from "../pages/GestionDocuments"
 import GestionUtilisateurs from "../pages/GestionUtilisateurs"
 import GestionGroupes from "../pages/GestionGroupes"
 import DocsContextProvider from "./DocsContext"
+import ModalContextProvider from "./ModalContext"
 
 function App() {
+  let cs = window.getComputedStyle(document.documentElement)
+  // eslint-disable-next-line no-undef
+  // let actualSize = parseFloat(cs.fontSize)
+
+  // console.log(actualSize)
   return (
     <DocsContextProvider>
       <div className="App">
         <Router>
-          <div className="second-part">
+          <div className="second-part" style={{ fontSize: 16 }}>
             <Banner />
             <div className="page">
-              <Routes>
-                <Route exact path="/" element={<Accueil />} />
-                <Route path="MesDocuments" element={<MesDocuments />} />
-                <Route path="MesDossiers" element={<MesDossiers />} />
-                <Route
-                  path="MesDossierspartages"
-                  element={<MesDossierspartages />}
-                />
-                <Route
-                  path="GestionDesdocuments"
-                  element={<GestionDocuments />}
-                />
-                <Route
-                  path="GestionDesUtilisateurs"
-                  element={<GestionUtilisateurs />}
-                />
-                <Route path="GestionDesGroupes" element={<GestionGroupes />} />
-              </Routes>
+              <ModalContextProvider>
+                <Routes>
+                  <Route exact path="/" element={<Accueil />} />
+                  <Route path="MesDocuments" element={<MesDocuments />} />
+                  <Route path="MesDossiers" element={<MesDossiers />} />
+                  <Route
+                    path="MesDossierspartages"
+                    element={<MesDossierspartages />}
+                  />
+                  <Route
+                    path="GestionDesdocuments"
+                    element={<GestionDocuments />}
+                  />
+                  <Route
+                    path="GestionDesUtilisateurs"
+                    element={<GestionUtilisateurs />}
+                  />
+                  <Route
+                    path="GestionDesGroupes"
+                    element={<GestionGroupes />}
+                  />
+                </Routes>
+              </ModalContextProvider>
             </div>
           </div>
         </Router>

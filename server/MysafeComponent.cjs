@@ -111,7 +111,7 @@ class MySafeComponents extends MySafeDatabase{
         if(!session || typeof session === "undefined") return false;
         var data = session.getAllData();
         var role = data.role;
-        if(session.isConnect() && role != null && role.indexOf('w') != '-1') {
+        if(session.isConnect()) {
             var userSpace = "./userSpace/" + session.getUserName() + "#" + session.getTheID();
             var folderPath = userSpace + '/' + path + '/' + name;
             fs.access(folderPath, (error) => {
@@ -154,7 +154,7 @@ class MySafeComponents extends MySafeDatabase{
         if(!session || typeof session === "undefined") return false;
         var data = session.getAllData();
         var role = data.role;
-        if(session.isConnect() && role != null && role.indexOf('w') != '-1') {
+        if(session.isConnect()) {
             var userSpace = "./userSpace/" + session.getUserName() + "#" + session.getTheID();
             var query = "INSERT INTO Component (userID, nom, type, categorie, status, path, folder, folder_path, createDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             

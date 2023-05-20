@@ -1,28 +1,33 @@
+import Axios from "axios";
 import React, { useContext, useState } from "react"
 import Layout from "../components/Layout"
 import { docsInfo } from "../datas/docInfo"
 import TabHead from "../components/TabHead"
 import TabLine from "../components/TabLine"
 import { DocsContext } from "../components/DocsContext"
-import Axios from "axios";
+import { getCookie, setCookie, apiUrl, apiBaseUrl } from "../components/utils";
 
 function GestionDocuments() {
-  const { activeDocs, search } = useContext(DocsContext)
-  var url = document.location.origin;
+  const { activeDocs, search } = useContext(DocsContext);
+  const [fileType, setFileType] = useState("");
+
+  const msfbUserData = JSON.parse(getCookie("msfb-user-data"));
   const setComponentData = (e) => {
     let reader = new FileReader();
     var files = e.target.files[0];
     if(typeof files === "undefined") return;
     reader.readAsDataURL(files);
     reader.onload = function() {
-        Axios.post(url + ":3001/component", {
+        Axios.post(apiUrl.addComponent, {
             name: files.name,
-            type: files.type,
+            type: fileType,
             path: reader.result,
             categorie: "default",
             folderName: "/",
             folderPath: "/",
-            status: "DRAFT"
+            status: "DRAFT",
+            username: msfbUserData.data.username,
+            token: msfbUserData.data.token
         }).then((response) => {
             console.log(response)
         })
@@ -30,14 +35,30 @@ function GestionDocuments() {
   }
 
   const addFiles = function(e) {
+    document.querySelector(".msfb-modal-file-type").classList.remove('display-file-modal')
+    document.querySelector(".msfb-modal-file-type").classList.add('hide-file-modal')
     document.querySelector(".userfile").click()
   }
+
+  const displayModal = function() {
+    document.querySelector(".msfb-modal-file-type").classList.remove('hide-file-modal')
+    document.querySelector(".msfb-modal-file-type").classList.add('display-file-modal')
+  }
+  
   return (
     <Layout docs={docsInfo}>
+      <div className="msfb-modal-file-type hide-file-modal">
+        <select className="msfb-file-type" onChange={(e) => { setFileType(e.target.value) }}>
+          <option value="facture">Facture</option>
+          <option value="contrat">Contrat</option>
+          <option value="bulletin">Bulletin</option>
+        </select>
+        <button onClick={addFiles}>Done</button>
+      </div>
       <div>
         <div className="custom-bar">
-          <button className="general-btn" onClick={addFiles}>Ajouter fichier zip</button>
-          <button className="general-btn" onClick={addFiles}>Ajouter fichier csv</button>
+          <button className="general-btn" onClick={displayModal}>Ajouter fichier zip</button>
+          <button className="general-btn" onClick={displayModal}>Ajouter fichier csv</button>
           <button className="junk">Voir corbeille</button>
           <input type="file" className="userfile" onChange={setComponentData}/>
         </div>
@@ -50,7 +71,7 @@ function GestionDocuments() {
             col2="Dernière date d'éxécution"
             lines={docsInfo.map(({ id }) => id)}
           />
-          {activeDocs.map(
+           {activeDocs.map(
             (doc, idx) =>
               (!search ||
                 doc.name.toLowerCase().includes(search.toLowerCase())) && (

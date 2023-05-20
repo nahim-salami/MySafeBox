@@ -12,6 +12,7 @@ class MySafeAccount extends MySafeUsers {
     allData;
     #beginDay;
     #endDay;
+    #token;
     /**
      *  w:write, r: read, x: delete, p: partage
      * 
@@ -39,6 +40,15 @@ class MySafeAccount extends MySafeUsers {
         this.#setEndDay(data.expire);
         this.operation = data.operation;
         this.request = data.request;
+        this.#setToken(data.token);
+    }
+
+    #setToken(token) {
+        this.#token = token;
+    }
+
+    getToken() {
+        return (this.#token) ? this.#token: false;
     }
     
     getUserName() {
@@ -131,7 +141,7 @@ class MySafeAccount extends MySafeUsers {
         });
 
         var compt = 0, add = false;
-        var timer = setInterval(()=>{
+        var timer = setInterval(() => {
             if(result && result.length > 0 && that.operation == "login") {
                 that.allData = result[0];
                 that.#userId = result[0].userID;
@@ -144,7 +154,8 @@ class MySafeAccount extends MySafeUsers {
                             id: that.#userId,
                             username: that.#username,
                             mail: result[0].email,
-                            birthday: result[0].birthday
+                            birthday: result[0].birthday,
+                            token: that.getToken()
                         },
                     }).end();
                 }
@@ -166,7 +177,8 @@ class MySafeAccount extends MySafeUsers {
                         that.request.send({
                             message: `create`,
                             data: {
-                                id: that.#userId
+                                id: that.#userId,
+                                token: that.getToken()
                             }
                         }).end();
                         clearInterval(innerTimer);

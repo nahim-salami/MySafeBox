@@ -16,7 +16,7 @@ const {
 } = require('./handlers');
 
 const cors = require("cors");
-const port = process.env.PORT || 80;
+const port = 5000;
 const app = express();
 app.use(bodyParser.json({limit: '250mb'}));
 app.use(cookieParser());

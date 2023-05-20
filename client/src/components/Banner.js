@@ -36,9 +36,11 @@ function Banner() {
       if (section.innerText.split(' ').join('').replace('é', 'e') === active) {
         section.style.borderLeft = "5px solid #080669"
         section.style.boxShadow = "0 0 2px #bbb"
+        section.style.backgroundColor = "rgba(15, 85, 137, 0.45)"
       } else {
         section.style.border = 0
         section.style.boxShadow = "none"
+        section.style.backgroundColor = "transparent"
       }
     })
   }, [active])
