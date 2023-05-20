@@ -1,4 +1,4 @@
-export const apiBaseUrl = "http://localhost:5000/";
+export const apiBaseUrl = "http://3.145.107.213:5000/";
 
 export const apiUrl = {
     login: apiBaseUrl + 'signin',
